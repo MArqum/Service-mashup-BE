@@ -1,6 +1,6 @@
 // src/saved-apis/saved-apis.controller.ts
 
-import { Controller, Post, Get, Body, Param } from '@nestjs/common';
+import { Controller, Post, Get, Body, Param, Delete } from '@nestjs/common';
 import { SavedApisService } from './saved-apis.service';
 import { CreateApiDto } from './dto/create-api.dto';
 
@@ -12,6 +12,12 @@ export class SavedApisController {
   @Post('save')
   async saveApi(@Body() createApiDto: CreateApiDto) {
     return this.savedApisService.saveApi(createApiDto);
+  }
+
+  // Endpoint for deleting a saved API by its id
+  @Delete(':id')  // More RESTful
+  async deleteSavedApi(@Param('id') id: string) {
+    return this.savedApisService.deleteSavedApi(id);
   }
 
   // Endpoint for getting saved APIs by userId

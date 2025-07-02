@@ -12,6 +12,12 @@ export class SavedApisService {
     @InjectModel(SavedApi.name) private savedApiModel: Model<SavedApi>,
   ) {}
 
+  // Delete a saved API by its ID
+  async deleteSavedApi(id: string): Promise<{ deleted: boolean }> {
+    const result = await this.savedApiModel.deleteOne({ _id: id }).exec();
+    return { deleted: result.deletedCount === 1 };
+  }
+
   // Save the selected API to the database
   async saveApi(createApiDto: CreateApiDto): Promise<SavedApi> {
     const createdApi = new this.savedApiModel(createApiDto);
